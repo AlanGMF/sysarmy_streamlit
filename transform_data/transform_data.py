@@ -42,9 +42,9 @@ def main(
 
     # nullify invalid characters
     regex = r'[@,:óÚíéá$a-zA-Z-]'
-
-    df[config.GROSS_SALARY] = df[config.GROSS_SALARY].str.replace(',', '')
-    df[config.GROSS_SALARY] = df[config.GROSS_SALARY].str.replace(regex, '', regex=True)
+    if df[config.GROSS_SALARY].dtype == str:
+        df[config.GROSS_SALARY] = df[config.GROSS_SALARY].str.replace(',', '')
+        df[config.GROSS_SALARY] = df[config.GROSS_SALARY].str.replace(regex, '', regex=True)
     df[config.GROSS_SALARY] = pd.to_numeric(df[config.GROSS_SALARY], errors='coerce')
 
     # values less than constants.MIN_WAGE_IN_USD are nullify
@@ -54,9 +54,9 @@ def main(
         ] = np.NaN
 
     # Último salario mensual o retiro NETO (en tu moneda local)
-
-    df[config.NET_SALARY] = df[config.NET_SALARY].str.replace(',', '')
-    df[config.NET_SALARY] = df[config.NET_SALARY].str.replace(regex, '', regex=True)
+    if df[config.GROSS_SALARY].dtype == str:
+        df[config.NET_SALARY] = df[config.NET_SALARY].str.replace(',', '')
+        df[config.NET_SALARY] = df[config.NET_SALARY].str.replace(regex, '', regex=True)
     df[config.NET_SALARY] = pd.to_numeric(df[config.NET_SALARY], errors='coerce')
     # values less than constants.MIN_WAGE_IN_USD are nullify
     df.loc[df[config.NET_SALARY] < config.MIN_WAGE_IN_USD, config.NET_SALARY] = np.NaN
@@ -100,9 +100,10 @@ def main(
         df.loc[values_to_reset, config.LAST_VALUE_EXCHANGE] = np.NaN
 
         # extract numbers from alphanumeric values
-        df[config.LAST_VALUE_EXCHANGE] = df[config.LAST_VALUE_EXCHANGE].str.replace(r",",".").str.replace(r"\$", "", regex=True)
-        values_to_reset = df[config.LAST_VALUE_EXCHANGE].apply(lambda x: isinstance(x, str) and x.isalnum())
-        df.loc[values_to_reset, config.LAST_VALUE_EXCHANGE] = df.loc[values_to_reset, config.LAST_VALUE_EXCHANGE].apply(utils.extract_numbers)
+        if df[config.LAST_VALUE_EXCHANGE].dtype == str:
+            df[config.LAST_VALUE_EXCHANGE] = df[config.LAST_VALUE_EXCHANGE].str.replace(r",",".").str.replace(r"\$", "", regex=True)
+            values_to_reset = df[config.LAST_VALUE_EXCHANGE].apply(lambda x: isinstance(x, str) and x.isalnum())
+            df.loc[values_to_reset, config.LAST_VALUE_EXCHANGE] = df.loc[values_to_reset, config.LAST_VALUE_EXCHANGE].apply(utils.extract_numbers)
 
         # converts strings that do not contain numbers and periods to NaN and converts numeric strings to numeric values
         values_to_avoid = df[config.LAST_VALUE_EXCHANGE].apply(lambda x: isinstance(x, str) and (bool(re.search(r'[^\d.]+', x))))
