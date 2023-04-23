@@ -4,7 +4,7 @@ from pathlib import Path
 # Save files in:
 FOLDER_NAME = "Processed_Files"
 FOLDER_PATH = Path(FOLDER_NAME)
-
+CONFIG_FILE = Path(__file__).resolve()
 # --- # --- #
 
 # Transform data
