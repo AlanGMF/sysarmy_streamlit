@@ -18,21 +18,6 @@ st.markdown("### Sobre este proyecto:")
 st.markdown("Complementar la informacion de Openqube sobre los salarios en el sector IT, en función de la posición y características individuales, para tener una visión más completa y detallada.")
 st.markdown("---")
 
-#
-st.markdown("## Páginas:")
-st.markdown("#### Resultados Generales")
-
-st.write("Se muestran los gráficos con todos los resultados de la encuesta seleccionada.")
-
-st.markdown("#### Filtros")
-
-st.write("En esta sección podes agregar filtros a los datos de la encuesta seleccionada para obtener resultados más específicos.")
-
-st.markdown("#### Archivos")
-
-st.write("Puedes agregar archivos al programa o borrarlos")
-
-st.markdown("---")
 st.markdown("##### Detalles extra:")
 
 st.write("Podes hacer las modificaciones necesarias en:")
