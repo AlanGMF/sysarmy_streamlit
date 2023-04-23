@@ -10,6 +10,8 @@ if "dataframe" not in st.session_state:
     st.session_state["dataframe"] = None
 
 # file form
+st.markdown("# Filtros")
+st.markdown("**En esta sección podes agregar filtros a los datos de la encuesta seleccionada para obtener resultados más específicos.**")
 with st.form("seleccione un archivo"):
     select_file = st.selectbox(
         "Seleccione un archivo para borrar",
@@ -114,5 +116,6 @@ if st.session_state["file_name_to_load"]:
             st.session_state["dataframe"] = df
 
 if type(st.session_state["dataframe"]) == pd.DataFrame:
+    st.markdown("---")
     st.markdown(f"# Resultado de: {file_name}")
     graphics.streamlit_dashboard.display_dashboard(st.session_state["dataframe"])

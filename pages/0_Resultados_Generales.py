@@ -7,6 +7,8 @@ import graphics.streamlit_dashboard
 if "file_load_general_general" not in st.session_state:
     st.session_state["file_load_general"] = None
 
+st.markdown("# Resultados generales")
+st.markdown("**Se muestran los gráficos con todos los resultados de la encuesta seleccionada.**")
 # file form
 with st.form("seleccione un archivo"):
     select_file = st.selectbox(
@@ -21,6 +23,7 @@ with st.form("seleccione un archivo"):
         st.session_state["file_load_general"] = pd.read_csv(str(path))
 
 if type(st.session_state["file_load_general"]) == pd.DataFrame:
+    st.markdown("---")
     st.markdown(f"# Resultado de: {select_file}")
     graphics.streamlit_dashboard.display_dashboard(
         st.session_state["file_load_general"]

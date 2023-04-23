@@ -19,6 +19,10 @@ if "rename_button" not in st.session_state:
 if "file" not in st.session_state:
     st.session_state["file"] = False
 
+st.markdown("# Archivos")
+st.markdown("Agregar archivos al programa o borrarlos")
+st.markdown("---")
+
 st.subheader("Cargar archivos")
 
 file = st.file_uploader("Cargar archivo", type=["csv"])
