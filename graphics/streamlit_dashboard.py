@@ -34,6 +34,8 @@ def display_dashboard(df):
                             df[config.GROSS_SALARY].unique().tolist()
                         ),
                         marginal="box",
+                        xaxis_title="Salario BRUTO mensual",
+                        yaxis_title="Cantidad de respuestas"
                     ),
                     theme=None,
                 )
@@ -51,6 +53,8 @@ def display_dashboard(df):
                             df[config.NET_SALARY].unique().tolist()
                         ),
                         marginal="box",
+                        xaxis_title="Salario NETO mensual",
+                        yaxis_title="Cantidad de respuestas"
                     ),
                     theme=None,
                 )
@@ -65,6 +69,8 @@ def display_dashboard(df):
                         df,
                         "¿Tuviste actualizaciones de tus ingresos laborales durante 2022?",
                         streamlit_order_plots.ORDER_1_3,
+                        xaxis_title="Cantidad de actualizaciones",
+                        yaxis_title="Cantidad de respuestas"
                     ),
                     theme=None,
                 )
@@ -90,7 +96,7 @@ def display_dashboard(df):
                 opacity=1,
                 labels={
                     "x": config.YEARS_OF_EXPERIENCE,
-                    "y": "Mediana del sueldo Neto segun experiencia",
+                    "y": "Mediana del salario NETO por año de experiencia",
                 },
                 title="Tendencia de sueldos segun experiencia",
             )
@@ -107,7 +113,7 @@ def display_dashboard(df):
                     x=X.flatten(),
                     y=angular_coefficient * np.log(X + 0.1).flatten() + intercept,
                     mode="lines",
-                    name="Regresión logarítmica",
+                    name="Tendencia (Ayuda visual)",
                 )
             )
 
@@ -160,6 +166,8 @@ def display_dashboard(df):
                                 config.LAST_VALUE_EXCHANGE
                                 + config.REWRITTEN_COLUMN_SUFFIX,
                                 None,
+                                xaxis_title="Valor del tipo de cambio",
+                                yaxis_title="Cantidad de respuestas"
                             ),
                             theme=None,
                         )
@@ -185,12 +193,11 @@ def display_dashboard(df):
                     df_aux,
                     x=df_aux,
                     marginal="box",
-                    opacity=1,
-                    labels={
-                        "count": "Cantidad de encuestados",
-                        "x": "Valores salariales",
-                    },
                     title="¿Cobras en dólares? " + tab,
+                )
+                fig.update_layout(
+                    yaxis_title="Cantidad de respuestas",
+                    xaxis_title="Valores salariales"
                 )
 
                 figurs[tab] = fig
@@ -241,6 +248,7 @@ def display_dashboard(df):
                     labels={
                         "x": config.YEARS_OF_EXPERIENCE,
                         "y": "Mediana del slario bruto",
+                        "color": "¿Cobras en dolares?"
                     },
                     title="Tendencia de sueldos segun experiencia y tipo de salario",
                 )
@@ -289,13 +297,13 @@ def display_dashboard(df):
                     df_aux,
                     x=df_aux,
                     marginal="box",
-                    opacity=1,
-                    labels={
-                        "count": "Cantidad de encuestados",
-                        "x": "Valores salariales",
-                    },
                     title="¿Cobras en dólares? " + tab,
                 )
+                fig.update_layout(
+                    yaxis_title="Cantidad de respuestas",
+                    xaxis_title="Valores salariales"
+                )
+
                 figurs[tab] = fig
 
                 with tabs[n]:
@@ -345,6 +353,7 @@ def display_dashboard(df):
                     labels={
                         "x": config.YEARS_OF_EXPERIENCE,
                         "y": "Mediana del slario neto",
+                        "color": "¿Cobras en dolares?"
                     },
                     title="Tendencia de sueldos segun experiencia y tipo de salario",
                 )
@@ -481,7 +490,8 @@ def display_dashboard(df):
             try:
                 st.plotly_chart(
                     streamlit_figures.get_pie(
-                        df[config.GENDER].value_counts(), title="sdad"
+                        df[config.GENDER].value_counts(),
+                        title="Generos"
                     ),
                     theme=None,
                 )
@@ -493,7 +503,12 @@ def display_dashboard(df):
             try:
                 st.plotly_chart(
                     streamlit_figures.get_horizontal_histogram(
-                        df, config.AGE, category_order=None, marginal="box"
+                        df,
+                        config.AGE,
+                        category_order=None,
+                        marginal="box",
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Edades"
                     ),
                     theme=None,
                 )
@@ -509,6 +524,8 @@ def display_dashboard(df):
                         streamlit_order_plots.get_order(
                             df[config.AGE + config.REWRITTEN_COLUMN_SUFFIX].unique()
                         ),
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Edades"
                     ),
                     theme=None,
                 )
@@ -534,6 +551,8 @@ def display_dashboard(df):
                         df,
                         config.YEARS_OF_EXPERIENCE + config.REWRITTEN_COLUMN_SUFFIX,
                         streamlit_order_plots.FIBO_ORDER,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Años de experiencia"
                     ),
                     theme=None,
                 )
@@ -548,6 +567,8 @@ def display_dashboard(df):
                         df,
                         config.TIME_IN_CURRENT_COMPANY + config.REWRITTEN_COLUMN_SUFFIX,
                         streamlit_order_plots.FIBO_ORDER,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Años de antiguedad"
                     ),
                     theme=None,
                 )
@@ -562,6 +583,8 @@ def display_dashboard(df):
                         df,
                         config.TIME_IN_CURRENT_ROLE + config.REWRITTEN_COLUMN_SUFFIX,
                         streamlit_order_plots.FIBO_ORDER,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Años en el puesto actual"
                     ),
                     theme=None,
                 )
@@ -608,13 +631,21 @@ def display_dashboard(df):
                         },
                         title="Relacion entre experiencia y antiguedad en la empresa",
                     )
-                    fig.add_traces(go.Scatter(x=x_range, y=y_range, name="Regression"))
+                    fig.add_traces(
+                        go.Scatter(
+                                    x=x_range,
+                                    y=y_range,
+                                    name="Tendencia (Ayuda visual)"
+                                    )
+                    )
                     st.plotly_chart(fig, theme=None)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
                     st.error(e)
             else:
                 st.warning("Faltan muestras, no fue posible desplegar el gráfico.")
+
+        st.markdown("***El símbolo  \")\" indica que el límite no está incluido en el intervalo.***")
 
         # Education
         st.markdown("### Educacion :mortar_board:")
@@ -634,6 +665,8 @@ def display_dashboard(df):
                     ),
                     use_container_width=True,
                     theme=None,
+                    yaxis_title="",
+                    xaxis_title="Cantidad de respuestas",
                 )
                 df[config.CAREER].fillna("No Contesta", inplace=True)
                 total_count = len(df)
@@ -664,7 +697,11 @@ def display_dashboard(df):
             try:
                 st.plotly_chart(
                     streamlit_figures.get_vertical_histogram(
-                        df, config.MAX_LVL_STUDIES, norm="percent"
+                        df,
+                        config.MAX_LVL_STUDIES,
+                        norm="percent",
+                        yaxis_title="",
+                        xaxis_title="Porcentaje",
                     ),
                     theme=None,
                 )
@@ -673,7 +710,7 @@ def display_dashboard(df):
                 st.error(e)
 
         # Salary based on highest level of studies
-        st.markdown("### Salario en base al máximo nivel de estudios")
+        st.markdown("### Salario en base al nivel de estudios")
         tabs = st.tabs(
             [
                 "Salario Bruto",
@@ -718,9 +755,11 @@ def display_dashboard(df):
                     opacity=1,
                     labels={
                         "x": config.YEARS_OF_EXPERIENCE,
-                        "y": "MEDIANA del sueldo bruto segun experiencia y nivel de estudios",
+                        "y": "MEDIANA del salario BRUTO x cada año de experiencia",
+                        "color": "Estudios"
+
                     },
-                    title="tendencia de sueldos segun experiencia, separado por estudios",
+                    title="tendencia de salarios segun experiencia, separado por estudios",
                 )
 
                 modelos = {}
@@ -791,9 +830,10 @@ def display_dashboard(df):
                     opacity=1,
                     labels={
                         "x": config.YEARS_OF_EXPERIENCE,
-                        "y": "MEDIANA del sueldo bruto segun experiencia y nivel de estudios",
+                        "y": "MEDIANA del salario NETO x cada año de experiencia",
+                        "color": "Estudios"
                     },
-                    title="tendencia de sueldos segun experiencia, separado por estudios",
+                    title="tendencia de salarios segun experiencia, separado por estudios",
                 )
 
                 modelos = {}
@@ -872,6 +912,8 @@ def display_dashboard(df):
                                 )
                             ).value_counts(),
                             title=config.BOOTCAMP,
+                            yaxis_title="",
+                            xaxis_title="Cantidad de participantes",
                         ),
                         theme=None,
                     )
@@ -885,6 +927,8 @@ def display_dashboard(df):
                     streamlit_figures.get_vertical_graph_from_serie(
                         df[config.TRAINING_IN].value_counts(),
                         "¿De que trato Boot Camp?",
+                        yaxis_title="",
+                        xaxis_title="Cantidad de participantes",
                     ),
                     theme=None,
                 )
@@ -971,6 +1015,8 @@ def display_dashboard(df):
                             ],
                             config.DAYS_IN_OFFICE + config.REWRITTEN_COLUMN_SUFFIX,
                             streamlit_order_plots.ORDER_5,
+                            yaxis_title="Cantidad de respuestas",
+                            xaxis_title="Días de trabajo en la oficina por semana."
                         ),
                         theme=None,
                     )
@@ -993,9 +1039,15 @@ def display_dashboard(df):
                             df,
                             config.DEPENDENTS + config.REWRITTEN_COLUMN_SUFFIX,
                             streamlit_order_plots.FIBO_ORDER,
+                            yaxis_title="Cantidad de respuestas",
+                            xaxis_title="Cantidad de gente a cargo"
                         ),
                         theme=None,
                     )
+                    st.markdown(r"""
+                        ***El símbolo  \")\" indica que el límite
+                        no está incluido en el intervalo.***
+                        """)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
                     st.error(e)
@@ -1026,7 +1078,9 @@ def display_dashboard(df):
                                 [],
                             )
                         ).value_counts(),
-                        config.PLATFORMS_COLUMN,
+                        title=config.PLATFORMS_COLUMN,
+                        yaxis_title="",
+                        xaxis_title="Cantidad de respuestas"
                     ),
                     use_container_width=True,
                     theme=None,
@@ -1048,7 +1102,9 @@ def display_dashboard(df):
                                 [],
                             )
                         ).value_counts(),
-                        config.LANGUAGES,
+                        title=config.LANGUAGES,
+                        yaxis_title="",
+                        xaxis_title="Cantidad de respuestas"
                     ),
                     use_container_width=True,
                     theme=None,
@@ -1071,6 +1127,8 @@ def display_dashboard(df):
                             )
                         ).value_counts(),
                         title=config.FRAMEWORKS,
+                        yaxis_title="",
+                        xaxis_title="Cantidad de respuestas"
                     ),
                     use_container_width=True,
                     theme=None,
@@ -1093,6 +1151,8 @@ def display_dashboard(df):
                             )
                         ).value_counts(),
                         title=config.DATABASES_COLUMN,
+                        yaxis_title="",
+                        xaxis_title="Cantidad de respuestas"
                     ),
                     use_container_width=True,
                     theme=None,
@@ -1113,6 +1173,8 @@ def display_dashboard(df):
                             )
                         ).value_counts(),
                         title=config.QA,
+                        yaxis_title="",
+                        xaxis_title="Cantidad de respuestas"
                     ),
                     use_container_width=True,
                     theme=None,
@@ -1152,6 +1214,8 @@ def display_dashboard(df):
                             )
                         ).value_counts(),
                         title="Beneficios",
+                        yaxis_title="",
+                        xaxis_title="Número de personas con el beneficio."
                     ),
                     use_container_width=True,
                     theme=None,
@@ -1177,6 +1241,8 @@ def display_dashboard(df):
                         df,
                         config.SALARY_COMPLIANCE + config.REWRITTEN_COLUMN_SUFFIX,
                         streamlit_order_plots.ORDER_1_4,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Conformidad"
                     ),
                     theme=None,
                 )
@@ -1190,7 +1256,9 @@ def display_dashboard(df):
                         df,
                         config.SEMI_ANNUAL_SALARY_COMPLIANCE
                         + config.REWRITTEN_COLUMN_SUFFIX,
-                        streamlit_order_plots.ORDER_1_4,
+                        category_order=streamlit_order_plots.ORDER_1_4,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Conformidad"
                     ),
                     theme=None,
                 )
@@ -1205,7 +1273,9 @@ def display_dashboard(df):
                         df,
                         config.WORKPLACE_RECOMMENDATION
                         + config.REWRITTEN_COLUMN_SUFFIX,
-                        streamlit_order_plots.ORDER_0_10,
+                        category_order=streamlit_order_plots.ORDER_0_10,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Conformidad"
                     ),
                     theme=None,
                 )
@@ -1215,13 +1285,23 @@ def display_dashboard(df):
 
         #  Tamaño de las empresas
         st.markdown("### Tamaño de las empresas :office:")
-        tabs = st.tabs(["Tamaño empresa", "Salario bruto segun tamaño de la empresa"])
+        tabs = st.tabs(
+            [
+                "Tamaño empresa",
+                "Salario BRUTO segun tamaño de la empresa",
+                "Salario NETO segun tamaño de la empresa"
+                ]
+        )
 
         with tabs[0]:
             try:
                 st.plotly_chart(
                     streamlit_figures.get_horizontal_histogram(
-                        df, config.ORGANIZATION_SIZE, streamlit_order_plots.COMPANY_SIZE
+                        df,
+                        config.ORGANIZATION_SIZE,
+                        streamlit_order_plots.COMPANY_SIZE,
+                        yaxis_title="Cantidad de respuestas",
+                        xaxis_title="Cantidad de personas"
                     ),
                     theme=None,
                 )
@@ -1240,10 +1320,43 @@ def display_dashboard(df):
                     x=median_salary.index,
                     opacity=1,
                     labels={
-                        "y": "cantidad de encuestados",
+                        "y": "cantidad de respuestas",
                         "x": "Valores salariales",
                     },
                     title="Salario bruto segun tamaño de la empresa",
+                )
+                fig.update_layout(
+                    yaxis_title="Salario BRUTO",
+                    xaxis_title="Cantidad de personas en la empresa"
+                )
+                fig.update_xaxes(
+                    categoryorder="array",
+                    categoryarray=streamlit_order_plots.COMPANY_SIZE,
+                )
+                st.plotly_chart(fig, theme=None)
+            except Exception as e:
+                st.error(config.ERROR_MSG)
+                st.error(e)
+        with tabs[2]:
+            try:
+                median_salary = df.groupby(config.ORGANIZATION_SIZE)[
+                    config.NET_SALARY
+                ].median()
+
+                fig = px.histogram(
+                    median_salary,
+                    y=median_salary.values,
+                    x=median_salary.index,
+                    opacity=1,
+                    labels={
+                        "y": "cantidad de respuestas",
+                        "x": "Valores salariales",
+                    },
+                    title="Salario bruto segun tamaño de la empresa",
+                )
+                fig.update_layout(
+                    yaxis_title="Salario NETO",
+                    xaxis_title="Cantidad de personas en la empresa"
                 )
                 fig.update_xaxes(
                     categoryorder="array",
