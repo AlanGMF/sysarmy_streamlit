@@ -22,6 +22,10 @@ py -m venv venv
 python3 -m venv venv
 source venv/bin/activate
 ```
+####  Abrir carpeta
+```
+cd sysarmy_streamlit\
+```
 ####  Instalar dependencias
 ```
 pip install -r requirements.txt
