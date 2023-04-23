@@ -23,14 +23,14 @@ st.markdown("# Archivos")
 st.markdown("Agregar archivos al programa o borrarlos")
 st.markdown("---")
 
+# Load file
 st.subheader("Cargar archivos")
-
 file = st.file_uploader("Cargar archivo", type=["csv"])
 if file:
-    st.write(st.session_state["rename_button"])
 
-    if file or (file and file.name != st.session_state["file_name"]):
+    if file.name != st.session_state["file_name"]:
         st.session_state["file_name"] = file.name
+        # read file
         try:
             df = pd.read_csv(file)
         except Exception as e:
@@ -75,7 +75,6 @@ if file:
     # display form to rename columns to supported columns
     if type(st.session_state["file"]) == pd.DataFrame:
         if not set(config.REQUIRED_COLUMNS).issubset(st.session_state["file"].columns):
-            # st.session_state["disable_load"] = True
             missing_columns = list(
                 set(config.REQUIRED_COLUMNS) - set(st.session_state["file"].columns)
             )
@@ -107,30 +106,36 @@ if file:
             st.write(rename_dict)
             st.session_state["disable_load"] = False
 
-        add_dollar_values = st.checkbox(
-            "Agregar valores del dolar", disabled=st.session_state["disable_load"]
+        # Add dollar values
+
+        st.markdown(
+            "**Podes encontrar los valores historicos en:** https://www.dolarito.ar/cotizaciones-historicas/oficial"
+        )
+        mep_dollar = st.number_input(
+            "Agregar valor del Dólar Blue",
+            disabled=st.session_state["disable_load"],
+            key="mep_dollar",
+        )
+        blue_dollar = st.number_input(
+            "Agregar valor del Dólar Oficial",
+            disabled=st.session_state["disable_load"],
+            key="blue_dollar",
+        )
+        official_dollar = st.number_input(
+            "Agregar valor del Dólar MEP",
+            disabled=st.session_state["disable_load"],
+            key="official_dollar",
         )
 
+        add_dollar_values = st.checkbox(
+            "Ignorar valores del dolar", disabled=st.session_state["disable_load"]
+        )
         if add_dollar_values:
-            st.markdown(
-                "**:green[Podes encontrar los valores historicos en:]** https://www.dolarito.ar/cotizaciones-historicas/oficial"
-            )
-            mep_dollar = st.number_input(
-                "Agregar valor del Dólar Blue",
-                disabled=st.session_state["disable_load"],
-                key="mep_dollar",
-            )
-            blue_dollar = st.number_input(
-                "Agregar valor del Dólar Oficial",
-                disabled=st.session_state["disable_load"],
-                key="blue_dollar",
-            )
-            official_dollar = st.number_input(
-                "Agregar valor del Dólar MEP",
-                disabled=st.session_state["disable_load"],
-                key="official_dollar",
-            )
-        else:
+            st.warning("""Los valores del dólar se utilizan como filtro para
+                establecer los sueldos mínimos y máximos. Si no se incluyen,
+                es posible que los gráficos muestren distorsiones
+                significativas debido a datos corruptos.""")
+
             mep_dollar = None
             blue_dollar = None
             official_dollar = None
@@ -146,36 +151,33 @@ if file:
             if st.session_state["rename_button"]:
                 st.session_state["file"].rename(columns=rename_dict, inplace=True)
 
-            st.markdown("#### Se renombraron las columnas:")
-            st.markdown("#### run transform:")
             st.session_state["disable_load"] = True
             st.session_state["rename_button"] = False
 
             if add_dollar_values:
-                result = main(
-                    st.session_state["file"],
-                    st.session_state["file_name"],
-                    mep_dollar,
-                    blue_dollar,
-                    official_dollar,
-                )
+                with st.spinner("Cargando archivos al programa"):
+                    result = main(
+                        st.session_state["file"],
+                        st.session_state["file_name"],
+                        mep_dollar,
+                        blue_dollar,
+                        official_dollar,
+                    )
             else:
-                result = main(
-                    st.session_state["file"], name=st.session_state["file_name"]
-                )
-            time.sleep(2)
+                with st.spinner("Cargando archivos al programa"):
+                    result = main(
+                        st.session_state["file"],
+                        name=st.session_state["file_name"]
+                    )
             if result:
                 st.balloons()
+                time.sleep(2)
+                st.experimental_rerun()
             else:
                 st.error("No se pudo cargar el archivo")
 
             st.session_state["file"] = False
             st.session_state["file_name"] = False
-            time.sleep(2)
-            st.experimental_rerun()
-
-        st.checkbox("prueba")
-    st.write(type(st.session_state["file"]))
 
 # DELETE FILE
 st.subheader("Borrar Archivos")
