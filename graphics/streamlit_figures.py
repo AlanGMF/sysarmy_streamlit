@@ -36,6 +36,8 @@ def get_horizontal_histogram(
     category_order: list,
     norm: str = None,
     marginal: str = None,
+    yaxis_title: str = "",
+    xaxis_title: str = "",
 ):
     fig = px.histogram(
         df,
@@ -44,7 +46,7 @@ def get_horizontal_histogram(
         marginal=marginal,
     )
     fig.update(layout_title_text=column_name)
-    fig.update_layout(yaxis_title="", xaxis_title="")
+    fig.update_layout(yaxis_title=yaxis_title, xaxis_title=xaxis_title)
     fig.update_xaxes(categoryorder="array", categoryarray=category_order)
 
     return fig
@@ -55,15 +57,27 @@ def update_yaxis(fig):
     fig.update_layout(yaxis_title="")
     return fig
 
-def get_vertical_histogram(df: pd.DataFrame, column: str, norm: str = None):
+def get_vertical_histogram(
+        df: pd.DataFrame,
+        column: str,
+        norm: str = None,
+        yaxis_title: str = "",
+        xaxis_title: str = "",
+        ):
     fig = px.histogram(df, y=column, histnorm=norm)
     fig = update_yaxis(fig)
     fig.update(layout_title_text=column)
+    fig.update_layout(yaxis_title=yaxis_title, xaxis_title=xaxis_title)
     return fig
 
-def get_vertical_graph_from_serie(serie: pd.Series, title: str):
+def get_vertical_graph_from_serie(
+        serie: pd.Series,
+        title: str,
+        yaxis_title: str = "",
+        xaxis_title: str = "",
+        ):
     fig = px.histogram(serie, y=serie.index, x=serie.values)
     fig = update_yaxis(fig)
     fig.update(layout_title_text=title)
-    fig.update_layout(xaxis_title="")
+    fig.update_layout(yaxis_title=yaxis_title, xaxis_title=xaxis_title)
     return fig
