@@ -29,6 +29,7 @@ else:
 if type(st.session_state["file_load_general"]) == pd.DataFrame:
     st.markdown("---")
     st.markdown(f"# Resultado de: {select_file}")
+    st.markdown("***Se puede interactuar y ampliar todos los gráficos en pantalla completa. Más información en [Plotly.Express](https://plotly.com/python/plotly-express/)***")
     graphics.streamlit_dashboard.display_dashboard(
         st.session_state["file_load_general"]
     )

@@ -122,4 +122,5 @@ if st.session_state["file_name_to_load"]:
 if type(st.session_state["dataframe"]) == pd.DataFrame:
     st.markdown("---")
     st.markdown(f"# Resultado de: {file_name}")
+    st.markdown("***Se puede interactuar y ampliar todos los gráficos en pantalla completa. Más información en [Plotly.Express](https://plotly.com/python/plotly-express/)***")
     graphics.streamlit_dashboard.display_dashboard(st.session_state["dataframe"])
