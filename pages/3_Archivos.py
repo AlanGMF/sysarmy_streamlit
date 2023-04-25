@@ -238,8 +238,12 @@ with st.form("Seleccione un archivo para borrar"):
         [file.name for file in config.FOLDER_PATH.glob("*")],
         key="list_of_files_to_delete",
     )
-
-    delete_button = st.form_submit_button("Delete")
+    disabled = False
+    if not [file.name for file in config.FOLDER_PATH.glob("*")]:
+        disabled = True
+    delete_button = st.form_submit_button(
+        "Borrar",
+        disabled=disabled)
 
     if delete_button:
         delete_file = Path(config.FOLDER_PATH).joinpath(delete_file)
