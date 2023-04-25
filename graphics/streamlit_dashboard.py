@@ -41,7 +41,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[1]:
             try:
@@ -60,14 +60,14 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[2]:
             try:
                 st.plotly_chart(
                     streamlit_figures.get_horizontal_histogram(
                         df,
-                        "¿Tuviste actualizaciones de tus ingresos laborales durante 2022?",
+                        "¿Tuviste ajustes por inflación el último año?",
                         streamlit_order_plots.ORDER_1_3,
                         xaxis_title="Cantidad de actualizaciones",
                         yaxis_title="Cantidad de respuestas"
@@ -76,7 +76,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         df_aux = (
             df.loc[
@@ -121,7 +121,7 @@ def display_dashboard(df):
                 st.plotly_chart(fig, theme=None)
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         # Dolares
 
@@ -142,16 +142,16 @@ def display_dashboard(df):
                     )
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
 
             with tabs[1]:
                 if (
                     config.LAST_VALUE_EXCHANGE + config.REWRITTEN_COLUMN_SUFFIX
                 ) not in df.columns:
                     st.warning(
-                        f"""No se encuentra la columna {
+                        f"""No se encuentra la columna: -{
                             config.LAST_VALUE_EXCHANGE + config.REWRITTEN_COLUMN_SUFFIX
-                            } en el archivo"""
+                            }- en el archivo"""
                     )
                 elif (
                     df[
@@ -173,7 +173,7 @@ def display_dashboard(df):
                         )
                     except Exception as e:
                         st.error(config.ERROR_MSG)
-                        st.error(e)
+                        st.exception(e)
                 else:
                     st.warning("Faltan muestras, no fue posible desplegar el gráfico.")
 
@@ -207,7 +207,7 @@ def display_dashboard(df):
                         st.plotly_chart(figurs[tab], theme=None)
                     except Exception as e:
                         st.error(config.ERROR_MSG)
-                        st.error(e)
+                        st.exception(e)
 
             df_aux = (
                 df.loc[
@@ -282,7 +282,7 @@ def display_dashboard(df):
                     st.plotly_chart(fig, theme=None)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
 
             # net salary
             st.markdown("##### Salario Neto")
@@ -311,7 +311,7 @@ def display_dashboard(df):
                         st.plotly_chart(figurs[tab], theme=None)
                     except Exception as e:
                         st.error(config.ERROR_MSG)
-                        st.error(e)
+                        st.exception(e)
 
             df_aux = (
                 df.loc[
@@ -387,7 +387,7 @@ def display_dashboard(df):
                     st.plotly_chart(fig, theme=None)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
 
             payments = df[config.PAYMENTS_IN_DOLLARS].unique().tolist()
             if len(payments) == 1 and payments[0] == "Cobro todo el salario en dólares":
@@ -429,7 +429,7 @@ def display_dashboard(df):
                         )
                     except Exception as e:
                         st.error(config.ERROR_MSG)
-                        st.error(e)
+                        st.exception(e)
                 with tabs[1]:
                     try:
                         df_ax = df[
@@ -460,7 +460,7 @@ def display_dashboard(df):
                         )
                     except Exception as e:
                         st.error(config.ERROR_MSG)
-                        st.error(e)
+                        st.exception(e)
 
         # Regiones
         st.markdown("### Regiones :world_map:")
@@ -474,7 +474,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         # Genero y edades
         st.markdown("### Genero y edades :birthday:")
@@ -497,7 +497,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[1]:
             try:
@@ -514,7 +514,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[2]:
             try:
                 st.plotly_chart(
@@ -531,7 +531,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         # Experiencia
         st.markdown("### Experiencia :brain:")
@@ -558,7 +558,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[1]:
             try:
@@ -574,7 +574,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[2]:
             try:
@@ -590,7 +590,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[3]:
             if df[config.YEARS_OF_EXPERIENCE].count() >= config.MINIMUM_RESPONSES:
@@ -641,7 +641,7 @@ def display_dashboard(df):
                     st.plotly_chart(fig, theme=None)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
             else:
                 st.warning("Faltan muestras, no fue posible desplegar el gráfico.")
 
@@ -678,7 +678,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[1]:
             try:
@@ -691,7 +691,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[2]:
             try:
@@ -707,7 +707,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         # Salary based on highest level of studies
         st.markdown("### Salario en base al nivel de estudios")
@@ -791,7 +791,7 @@ def display_dashboard(df):
                     st.plotly_chart(fig, theme=None)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
         with tabs[1]:
             df_aux = (
                 df.loc[
@@ -865,7 +865,7 @@ def display_dashboard(df):
                     st.plotly_chart(fig, theme=None)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
 
         # Bootcamp
         st.markdown("### Bootcamp :books:")
@@ -890,7 +890,7 @@ def display_dashboard(df):
 
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[1]:
             if len(df[df[config.BOOTCAMP].notna()]) == 0:
@@ -919,22 +919,27 @@ def display_dashboard(df):
                     )
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
 
         with tabs[2]:
-            try:
-                st.plotly_chart(
-                    streamlit_figures.get_vertical_graph_from_serie(
-                        df[config.TRAINING_IN].value_counts(),
-                        "¿De que trato Boot Camp?",
-                        yaxis_title="",
-                        xaxis_title="Cantidad de participantes",
-                    ),
-                    theme=None,
+            if config.TRAINING_IN not in df.columns:
+                st.warning(
+                    f"No se encuentra la columna: -{config.TRAINING_IN}- en el archivo"
                 )
-            except Exception as e:
-                st.error(config.ERROR_MSG)
-                st.error(e)
+            else:
+                try:
+                    st.plotly_chart(
+                        streamlit_figures.get_vertical_graph_from_serie(
+                            df[config.TRAINING_IN].value_counts(),
+                            "¿De que trato Boot Camp?",
+                            yaxis_title="",
+                            xaxis_title="Cantidad de participantes",
+                        ),
+                        theme=None,
+                    )
+                except Exception as e:
+                    st.error(config.ERROR_MSG)
+                    st.exception(e)
 
         # Contrato laboral
         st.markdown("### Contrato laboral :scroll:")
@@ -951,7 +956,7 @@ def display_dashboard(df):
         with tabs[0]:
             if config.CONTRACT not in df.columns:
                 st.warning(
-                    f"No se encuentra la columna {config.CONTRACT} en el archivo"
+                    f"No se encuentra la columna: -{config.CONTRACT}- en el archivo"
                 )
             else:
                 try:
@@ -963,11 +968,11 @@ def display_dashboard(df):
                     )
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
         with tabs[1]:
             if config.EMPLOYMENT_STATUS not in df.columns:
                 st.warning(
-                    f"No se encuentra la columna {config.EMPLOYMENT_STATUS} en el archivo"
+                    f"No se encuentra la columna: -{config.EMPLOYMENT_STATUS}- en el archivo"
                 )
             else:
                 try:
@@ -983,11 +988,11 @@ def display_dashboard(df):
                     )
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
         with tabs[2]:
             if config.WORK_MODALITY not in df.columns:
                 st.warning(
-                    f"No se encuentra la columna {config.WORK_MODALITY} en el archivo"
+                    f"No se encuentra la columna: -{config.WORK_MODALITY}- en el archivo"
                 )
             else:
                 try:
@@ -1000,7 +1005,7 @@ def display_dashboard(df):
                     )
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
         with tabs[3]:
             if (
                 config.DAYS_IN_OFFICE in df.columns
@@ -1022,15 +1027,15 @@ def display_dashboard(df):
                     )
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
             else:
                 st.warning(
-                    f"No se encuentra la columna {config.DAYS_IN_OFFICE} en el archivo"
+                    f"No se encuentra la columna: -{config.DAYS_IN_OFFICE}- en el archivo"
                 )
         with tabs[4]:
             if config.DEPENDENTS not in df.columns:
                 st.warning(
-                    f"No se encuentra la columna {config.DEPENDENTS} en el archivo"
+                    f"No se encuentra la columna: -{config.DEPENDENTS}- en el archivo"
                 )
             else:
                 try:
@@ -1050,7 +1055,7 @@ def display_dashboard(df):
                         """)
                 except Exception as e:
                     st.error(config.ERROR_MSG)
-                    st.error(e)
+                    st.exception(e)
 
         # Herramientas
         st.markdown("### Herramientas :toolbox:")
@@ -1087,7 +1092,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[1]:
             try:
                 st.plotly_chart(
@@ -1111,7 +1116,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[2]:
             try:
                 st.plotly_chart(
@@ -1135,7 +1140,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[3]:
             try:
                 st.plotly_chart(
@@ -1159,7 +1164,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[4]:
             try:
                 st.plotly_chart(
@@ -1181,7 +1186,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         # Bono y beneficios
         st.markdown("### Bonos y Beneficios :gift:")
@@ -1198,7 +1203,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[1]:
             try:
                 st.plotly_chart(
@@ -1222,7 +1227,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         # Conformidad salarial
         st.markdown("### Conformidad salarial:+1::-1:")
@@ -1248,7 +1253,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[1]:
             try:
                 st.plotly_chart(
@@ -1264,7 +1269,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         with tabs[2]:
             try:
@@ -1281,7 +1286,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
         #  Tamaño de las empresas
         st.markdown("### Tamaño de las empresas :office:")
@@ -1307,7 +1312,7 @@ def display_dashboard(df):
                 )
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[1]:
             try:
                 median_salary = df.groupby(config.ORGANIZATION_SIZE)[
@@ -1336,7 +1341,7 @@ def display_dashboard(df):
                 st.plotly_chart(fig, theme=None)
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
         with tabs[2]:
             try:
                 median_salary = df.groupby(config.ORGANIZATION_SIZE)[
@@ -1365,6 +1370,6 @@ def display_dashboard(df):
                 st.plotly_chart(fig, theme=None)
             except Exception as e:
                 st.error(config.ERROR_MSG)
-                st.error(e)
+                st.exception(e)
 
     return container
