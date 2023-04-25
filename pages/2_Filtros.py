@@ -11,16 +11,20 @@ if "dataframe" not in st.session_state:
 
 # file form
 st.markdown("# Filtros")
-st.markdown("**En esta sección podes agregar filtros a los datos de la encuesta seleccionada para obtener resultados más específicos.**")
-with st.form("seleccione un archivo"):
-    select_file = st.selectbox(
-        "Seleccione un archivo para borrar",
-        [file.name for file in config.FOLDER_PATH.glob("*")],
-        key="list_of_files_to_delete",
-    )
-    submit_f1 = st.form_submit_button("Cargar")
-    if submit_f1:
-        st.session_state["file_name_to_load"] = str(select_file)
+st.markdown("**Agregá filtros a los datos de la encuesta seleccionada para obtener resultados más específicos.**")
+if [file.name for file in config.FOLDER_PATH.glob("*")]:
+    with st.form("seleccione un archivo"):
+        select_file = st.selectbox(
+            "Seleccione una encuesta",
+            [file.name for file in config.FOLDER_PATH.glob("*")],
+            key="list_of_files_to_delete",
+        )
+        submit_f1 = st.form_submit_button("Cargar")
+        if submit_f1:
+            st.session_state["file_name_to_load"] = str(select_file)
+else:
+    st.session_state["file_name_to_load"] = None
+    st.info(f"No hay se encuentran archivos guardados en: {str(config.FOLDER_PATH.absolute())}, cargalos en la seccion ***Archivos***.")
 
 if st.session_state["file_name_to_load"]:
     # Respondent filters form
