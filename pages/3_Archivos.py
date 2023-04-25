@@ -26,7 +26,7 @@ st.markdown("---")
 # Load file
 st.subheader("Cargar archivos")
 file = st.file_uploader("Cargar archivo", type=["csv"])
-if file:
+if file: #Porque no cambiamos a un negado, es decir si no hay file, tiro error o algo similar, asi podemos evitar la anidacion de los ifs que ya de por si hay varios
 
     if file.name != st.session_state["file_name"]:
         st.session_state["file_name"] = file.name
