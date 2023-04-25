@@ -234,7 +234,7 @@ MIN_AGE = 18
 
 # max and min salary in dollars that someone
 # can earn per month
-MAX_WAGE_IN_USD = 25000
+MAX_WAGE_IN_USD = 20000
 MIN_WAGE_IN_USD = 150
 
 # Any value above it will be replaced
