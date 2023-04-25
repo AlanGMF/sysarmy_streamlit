@@ -127,35 +127,35 @@ SAME_COLUMNS = {
 
 
 SURVEYS = {
-    "Encuesta_Sysarmy_2019_1": {
+    "Encuesta_Sysarmy_2019_1.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2019.01.csv",
         "dollar_values": [40, 38, 39]# Value for official dollar, blue dollar, and MEP dollar respectively
     },
-    "Encuesta_Sysarmy_2019_2": {
+    "Encuesta_Sysarmy_2019_2.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2019.02.csv",
         "dollar_values": [60, 60, 68]
     },
-    "Encuesta_Sysarmy_2020_1": {
+    "Encuesta_Sysarmy_2020_1.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2020.01.csv",
         "dollar_values": [63, 78, 83]
     },
-    "Encuesta_Sysarmy_2020_2": {
+    "Encuesta_Sysarmy_2020_2.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2020.02.csv",
         "dollar_values": [78, 137, 125]
     },
-    "Encuesta_Sysarmy_2021_1": {
+    "Encuesta_Sysarmy_2021_1.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2021.01.csv",
         "dollar_values": [94, 146, 139]
     },
-    "Encuesta_Sysarmy_2021_2": {
+    "Encuesta_Sysarmy_2021_2.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2021.02.csv",
         "dollar_values": [103, 185, 170]
     },
-    "Encuesta_Sysarmy_2022_1": {
+    "Encuesta_Sysarmy_2022_1.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2022.01.csv",
         "dollar_values": [113, 204, 197]
     },
-    "Encuesta_Sysarmy_2023_1": {
+    "Encuesta_Sysarmy_2023_1.csv": {
         "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2023.01.csv",
         "dollar_values": [215, 390, 383]
     },
