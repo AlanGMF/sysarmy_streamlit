@@ -5,9 +5,8 @@ from pathlib import Path
 FOLDER_NAME = "Processed_Files"
 FOLDER_PATH = Path(FOLDER_NAME)
 CONFIG_FILE = Path(__file__).resolve()
-# --- # --- #
 
-# Transform data
+# --- # --- #
 
 # supported columns
 COUNTRIES = "Estoy trabajando en"  # OPTIONAL
@@ -56,6 +55,10 @@ WORK_MODALITY = "Modalidad de trabajo"
 BONUS = "Recibís algún tipo de bono"
 EMPLOYMENT_STATUS = "Dedicación"
 
+# --- # --- #
+
+# Upload files configs
+
 # Columns that do not change between each year's surveys
 REQUIRED_COLUMNS = [
     # COUNTRIES,
@@ -93,9 +96,9 @@ REQUIRED_COLUMNS = [
     BONUS,
 ]
 
-
 # Rename columns in file to upload
 SAME_COLUMNS = {
+    "Argentina" : PROVINCES,
     "Salario mensual o retiro NETO (en tu moneda local)": NET_SALARY,
     "Salario mensual NETO (en tu moneda local)": NET_SALARY,
     "Salario mensual o retiro BRUTO (en tu moneda local)": GROSS_SALARY,
@@ -118,6 +121,44 @@ SAME_COLUMNS = {
     "Cantidad de empleados": ORGANIZATION_SIZE,
     "Lenguajes de programación": LANGUAGES,
     "Beneficios extra": BENEFITS,
+}
+
+#  The previous surveys that the program can successfully run.
+
+
+SURVEYS = {
+    "Encuesta_Sysarmy_2019_1": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2019.01.csv",
+        "dollar_values": [40, 38, 39]# Value for official dollar, blue dollar, and MEP dollar respectively
+    },
+    "Encuesta_Sysarmy_2019_2": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2019.02.csv",
+        "dollar_values": [60, 60, 68]
+    },
+    "Encuesta_Sysarmy_2020_1": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2020.01.csv",
+        "dollar_values": [63, 78, 83]
+    },
+    "Encuesta_Sysarmy_2020_2": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2020.02.csv",
+        "dollar_values": [78, 137, 125]
+    },
+    "Encuesta_Sysarmy_2021_1": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2021.01.csv",
+        "dollar_values": [94, 146, 139]
+    },
+    "Encuesta_Sysarmy_2021_2": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2021.02.csv",
+        "dollar_values": [103, 185, 170]
+    },
+    "Encuesta_Sysarmy_2022_1": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2022.01.csv",
+        "dollar_values": [113, 204, 197]
+    },
+    "Encuesta_Sysarmy_2023_1": {
+        "url": "https://raw.githubusercontent.com/openqube/openqube-sueldos/release-2023.01/data/csv/argentina/2023.01.csv",
+        "dollar_values": [215, 390, 383]
+    },
 }
 
 # --- # --- #

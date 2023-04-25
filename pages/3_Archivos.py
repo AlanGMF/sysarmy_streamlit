@@ -47,6 +47,7 @@ if file:
                 ):
                     try:
                         df.columns = df.iloc[index]
+                        # Rename columns
                         df = df.rename(columns=lambda x: x.replace("  ", " ").rstrip())
                         df = df.iloc[(index + 1):, :]
                         # rename columns based on constants.SAME_COLUMNS
@@ -111,20 +112,20 @@ if file:
         st.markdown(
             "**Podes encontrar los valores historicos en:** https://www.dolarito.ar/cotizaciones-historicas/oficial"
         )
-        mep_dollar = st.number_input(
-            "Agregar valor del Dólar Blue",
+        official_dollar = st.number_input(
+            "Agregar valor del Dólar oficial",
             disabled=st.session_state["disable_load"],
-            key="mep_dollar",
+            key="official_dollar",
         )
         blue_dollar = st.number_input(
-            "Agregar valor del Dólar Oficial",
+            "Agregar valor del Dólar blue",
             disabled=st.session_state["disable_load"],
             key="blue_dollar",
         )
-        official_dollar = st.number_input(
+        mep_dollar = st.number_input(
             "Agregar valor del Dólar MEP",
             disabled=st.session_state["disable_load"],
-            key="official_dollar",
+            key="mep_dollar",
         )
 
         add_dollar_values = st.checkbox(
@@ -136,9 +137,9 @@ if file:
                 es posible que los gráficos muestren distorsiones
                 significativas debido a datos corruptos.""")
 
-            mep_dollar = None
-            blue_dollar = None
             official_dollar = None
+            blue_dollar = None
+            mep_dollar = None
 
         transform = st.button(
             "Cargar archivo",
@@ -170,6 +171,7 @@ if file:
                         name=st.session_state["file_name"]
                     )
             if result:
+                st.success("Archivo subido correctamente")
                 st.balloons()
                 time.sleep(2)
                 st.experimental_rerun()
@@ -179,6 +181,49 @@ if file:
             st.session_state["file"] = False
             st.session_state["file_name"] = False
 
+st.markdown("##### Anteriores encuestas:")
+st.markdown("*Los archivos se descargan desde el [repo](https://github.com/openqube/openqube-sueldos/tree/release-2023.01/data/csv/argentina) de Openqube*")
+
+survey = st.selectbox(
+    "Elegir encuesta:",
+    config.SURVEYS.keys(),
+    key="anteriores_encuestas"
+)
+
+download_n_transform = st.button("Descargar", key="download_n_transform", type="primary",)
+
+if download_n_transform:
+    with st.spinner("Cargando archivos al programa"):
+        try:
+            df = pd.read_csv(config.SURVEYS[survey]["url"])
+        except Exception as e:
+            st.error(f"""No se pude descargar el archivo 
+                desde {config.SURVEYS[survey]["url"]}""")
+            st.exception(e)
+        df = df.rename(columns=lambda x: x.replace("  ", " ").rstrip())
+        df.rename(columns=config.SAME_COLUMNS, inplace=True)
+        if "¿Salir o seguir contestando?" in df.columns:
+            df.drop(
+                "¿Salir o seguir contestando?", axis=1, inplace=True
+            )
+        try:
+            result = main(
+                df,
+                survey,
+                config.SURVEYS[survey]["dollar_values"][0],
+                config.SURVEYS[survey]["dollar_values"][1],
+                config.SURVEYS[survey]["dollar_values"][2],
+            )
+        except Exception as e:
+            st.error(f"""No se pude cargar el archivo 
+                {config.SURVEYS[survey]["url"]}""")
+            st.exception(e)
+
+        if result:
+            st.success("Archivo subido correctamente")
+            st.balloons()
+
+st.markdown("---")
 # DELETE FILE
 st.subheader("Borrar Archivos")
 
