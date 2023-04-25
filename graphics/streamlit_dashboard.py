@@ -10,7 +10,7 @@ import config
 import graphics.streamlit_order_plots as streamlit_order_plots
 import graphics.streamlit_figures as streamlit_figures
 
-
+#EN GENERAL HAY MUCHOS TRY CATCH, que tal si envolvemos esto en un trycatch grande y vamos tirando las exceptions a medida que pueda surgir un error
 def display_dashboard(df):
     container = st.container()
     with container:
@@ -400,6 +400,7 @@ def display_dashboard(df):
                 )
                 with tabs[0]:
                     try:
+                        #Esto estaria bueno meterlo en una funcion ya que lo que contiene tabs[0] y tabs[1] son bastantes parecidas
                         df_ax = df[
                             (
                                 df[config.PAYMENTS_IN_DOLLARS]
@@ -430,8 +431,10 @@ def display_dashboard(df):
                     except Exception as e:
                         st.error(config.ERROR_MSG)
                         st.error(e)
+                   
                 with tabs[1]:
                     try:
+                        # A
                         df_ax = df[
                             (
                                 df[config.PAYMENTS_IN_DOLLARS]
@@ -589,7 +592,7 @@ def display_dashboard(df):
                     theme=None,
                 )
             except Exception as e:
-                st.error(config.ERROR_MSG)
+                st.error(config.ERROR_MSG) 
                 st.error(e)
 
         with tabs[3]:
