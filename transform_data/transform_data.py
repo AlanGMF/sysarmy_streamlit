@@ -305,6 +305,10 @@ def main(
     rare_carreers = carreer_counts[carreer_counts < config.MIN_AMOUNT].index
     df[config.CAREER + config.REWRITTEN_COLUMN_SUFFIX] = df[config.CAREER].map(lambda x: config.FILL_WITH if x in rare_carreers else x)
 
+    # Cantidad de personas en tu organización
+
+    df[config.ORGANIZATION_SIZE] = df[config.ORGANIZATION_SIZE].apply(utils.rewrite_number_people)
+
     # Save data
     config.FOLDER_PATH.mkdir(parents=True, exist_ok=True)
     df.to_csv(config.FOLDER_PATH / name)

@@ -12,13 +12,13 @@ FIBO_ORDER = [
 COMPANY_SIZE = [
     "1 (solamente yo)",
     "De 2 a 10 personas",
-    "De 11  a 50  personas",
+    "De 11 a 50  personas",
     "De 51 a 100 personas",
     "De 101 a 200 personas",
     "De 201 a 500 personas",
     "De 501 a 1000 personas",
     "De 1001 a 2000 personas",
-    "De 2001a 5000 personas",
+    "De 2001 a 5000 personas",
     "De 5001 a 10000 personas",
     "Más de 10000 personas",
 ]

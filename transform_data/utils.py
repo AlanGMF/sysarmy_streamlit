@@ -862,3 +862,44 @@ def to_fibonacci_category(number: float):
         n1 = n3
 
     return ("+" + str(n1))
+
+def rewrite_number_people(value):
+    """""Converts the numerical value of people count into
+    a more readable format."
+
+    :param value: The value of amount of people.
+    :type value: str
+    :return: The human-readable format of amount of people.
+    :rtype: str
+    """
+    match value:
+        case '10001+':
+            return 'Más de 10000 personas'
+        case '5001-10000':
+            return 'De 5001 a 10000 personas'
+        case '2001-5000':
+            return 'De 2001 a 5000 personas'
+        case '1001-2000':
+            return 'De 1001 a 2000 personas'
+        case '501-1000':
+            return 'De 501 a 1000 personas'
+        case '201-500':
+            return 'De 201 a 500 personas'
+        case '101-200':
+            return 'De 101 a 200 personas'
+        case '51-100':
+            return 'De 51 a 100 personas'
+        case '11-50':
+            return 'De 11 a 50  personas'
+        case '2-10':
+            return 'De 2 a 10 personas'
+        case '2-10':
+            return 'De 2 a 10 personas'
+        case '1-10':
+            return 'De 2 a 10 personas'
+        case 'De 2001a 5000 personas':
+            return 'De 2001 a 5000 personas'
+        case 'De 11  a 50  personas':
+            return 'De 11 a 50  personas'
+        case _:
+            return value
