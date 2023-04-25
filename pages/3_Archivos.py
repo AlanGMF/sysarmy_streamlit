@@ -156,7 +156,7 @@ if file:
             st.session_state["rename_button"] = False
 
             if add_dollar_values:
-                with st.spinner("Cargando archivos al programa"):
+                with st.spinner("Cargando archivo al programa"):
                     result = main(
                         st.session_state["file"],
                         st.session_state["file_name"],
@@ -165,7 +165,7 @@ if file:
                         official_dollar,
                     )
             else:
-                with st.spinner("Cargando archivos al programa"):
+                with st.spinner("Cargando archivo al programa"):
                     result = main(
                         st.session_state["file"],
                         name=st.session_state["file_name"]
@@ -193,7 +193,7 @@ survey = st.selectbox(
 download_n_transform = st.button("Descargar", key="download_n_transform", type="primary",)
 
 if download_n_transform:
-    with st.spinner("Cargando archivos al programa"):
+    with st.spinner("Cargando archivo al programa"):
         try:
             df = pd.read_csv(config.SURVEYS[survey]["url"])
         except Exception as e:
@@ -202,10 +202,15 @@ if download_n_transform:
             st.exception(e)
         df = df.rename(columns=lambda x: x.replace("  ", " ").rstrip())
         df.rename(columns=config.SAME_COLUMNS, inplace=True)
+
+        for column in df.columns:
+            if '¿Tuviste ajustes por inflación' in column or "¿Tuviste actualizaciones de tus ingresos" in column:
+                df.rename(columns={column: '¿Tuviste ajustes por inflación el último año?'}, inplace=True)
         if "¿Salir o seguir contestando?" in df.columns:
             df.drop(
                 "¿Salir o seguir contestando?", axis=1, inplace=True
             )
+
         try:
             result = main(
                 df,
@@ -244,8 +249,5 @@ with st.form("Seleccione un archivo para borrar"):
         except Exception as e:
             st.error(e)
         st.success("Se borro correctamente el archivo")
-
-
-st.write("")
-st.markdown("***Los archivos se guardan en:***")
-st.write(config.FOLDER_PATH.absolute())
+        time.sleep(2)
+        st.experimental_rerun()
