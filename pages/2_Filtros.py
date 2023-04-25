@@ -67,7 +67,7 @@ if st.session_state["file_name_to_load"]:
             key="form_lvl_studies",
         )
         ignore_studies = st.checkbox("Ignorar estudios")
-
+        ignore_payments = True
         if config.PAYMENTS_IN_DOLLARS in df.columns:
             type_of_salary = st.selectbox(
                 config.PAYMENTS_IN_DOLLARS,
