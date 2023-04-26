@@ -4,7 +4,7 @@ import config
 #
 st.title("Resultados de la Encuesta Sysarmy")
 st.markdown("---")
-st.markdown("""##### **Consulta los resultados, aplicar filtros y gestionar archivos para obtener la información que necesitas.**""")
+st.markdown("""##### **Consulta los resultados y aplica filtros a las encuestas para obtener la información que necesitas.**""")
 st.markdown("***Podes encontrar los informes mas elaborados de las encuestas hechos por Openqube [aca](https://sueldos.openqube.io/encuesta-sueldos-2023.01/)***")
 
 st.markdown("---")
